@@ -39,5 +39,51 @@
  *   // => { baseAmount: 500, gstRate: 0, gstAmount: 0, totalAmount: 500 }
  */
 export function calculateGST(amount, category) {
-  // Your code here
+  if (!Number.isFinite(amount) || amount <= 0 || typeof (category) !== "string" || category.trim() === "") {
+    return null;
+  }
+
+  const lowerCategory = category.toLowerCase();
+
+  let baseAmount = amount;
+  let gstRate = 0;
+  let gstAmount = 0;
+  let totalAmount = 0;
+
+  switch (lowerCategory) {
+    case "essential":
+      gstRate = 0;
+      gstAmount = parseFloat(((baseAmount * 0) / 100).toFixed(2));
+      totalAmount = parseFloat((baseAmount + gstAmount).toFixed(2));
+      break;
+
+    case "food":
+      gstRate = 5;
+      gstAmount = parseFloat(((baseAmount * 5) / 100).toFixed(2));
+      totalAmount = parseFloat((baseAmount + gstAmount).toFixed(2));
+      break;
+
+    case "standard":
+      gstRate = 12;
+      gstAmount = parseFloat(((baseAmount * 12) / 100).toFixed(2));
+      totalAmount = parseFloat((baseAmount + gstAmount).toFixed(2));
+      break;
+
+    case "electronics":
+      gstRate = 18;
+      gstAmount = parseFloat(((baseAmount * 18) / 100).toFixed(2));
+      totalAmount = parseFloat((baseAmount + gstAmount).toFixed(2));
+      break;
+
+    case "luxury":
+      gstRate = 28;
+      gstAmount = parseFloat(((baseAmount * 28) / 100).toFixed(2));
+      totalAmount = parseFloat((baseAmount + gstAmount).toFixed(2));
+      break;
+    
+    default:
+      return null;
+  }
+
+  return { baseAmount, gstAmount, gstRate, totalAmount };
 }
